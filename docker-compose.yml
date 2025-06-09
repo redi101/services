@@ -1,0 +1,33 @@
+version: "3.9"
+services:
+  service1:
+    build: ./service1
+    expose:
+      - 8001
+    networks:
+      - back_net
+
+  service2:
+    build: ./service2
+    expose:
+      - 8002
+    networks:
+      - back_net
+
+  service3:
+    build: ./service3
+    ports:
+      - "8080:8000"
+    depends_on:
+      - service1
+      - service2
+    networks:
+      - back_net
+      - front_net
+
+networks:
+  back_net:
+    driver: bridge
+  front_net:
+    driver: bridge
+
